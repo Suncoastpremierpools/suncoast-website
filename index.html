@@ -77,6 +77,16 @@ nav{position:fixed;top:38px;left:0;right:0;z-index:200;padding:14px 5%;display:f
 .nav-links a:hover{color:var(--sky)}
 .nav-cta{background:var(--coral);color:white;border:none;border-radius:24px;padding:10px 22px;font-size:13.5px;font-weight:600;cursor:pointer;text-decoration:none;transition:background .2s,transform .15s;letter-spacing:.02em}
 .nav-cta:hover{background:var(--coral-dark);transform:translateY(-1px)}
+.nav-burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:34px;height:34px;background:none;border:none;cursor:pointer;padding:0}
+.nav-burger span{display:block;width:100%;height:2px;background:#fff;border-radius:2px;transition:transform .2s,opacity .2s}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.nav-mobile-panel{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:199;background:rgba(8,20,38,.97);backdrop-filter:blur(14px);padding:120px 8% 40px;flex-direction:column;gap:8px}
+.nav-mobile-panel.open{display:flex}
+.nav-mobile-panel a{color:rgba(255,255,255,.88);text-decoration:none;font-family:'Raleway',sans-serif;font-size:20px;font-weight:600;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.nav-mobile-panel a:last-child{border-bottom:none}
+.nav-mobile-panel .nav-cta{align-self:flex-start;margin-top:20px}
 
 /* HERO */
 .hero{min-height:100vh;display:flex;align-items:center;padding:170px 5% 90px}
@@ -245,6 +255,7 @@ footer{background:var(--navy);padding:38px 5% 24px;border-top:1px solid rgba(255
   .logo-ring{width:170px;height:170px}
   .guarantee-card{width:100%;max-width:280px}
   .nav-links{display:none}
+  .nav-burger{display:flex}
   .trust-bar-inner{flex-wrap:wrap}
   .trust-item{min-width:50%;border-right:none;border-bottom:1px solid rgba(255,255,255,.08);padding:10px 0}
   .trust-item:last-child{border-bottom:none}
@@ -282,7 +293,39 @@ footer{background:var(--navy);padding:38px 5% 24px;border-top:1px solid rgba(255
     <a href="#faq">FAQ</a>
   </div>
   <a href="tel:9413121199" class="nav-cta">Free Quote</a>
+  <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="nav-mobile-panel" id="navMobilePanel">
+  <a href="#pricing">Pricing</a>
+  <a href="#results">Results</a>
+  <a href="#areas">Areas</a>
+  <a href="#snowbirds">Snowbirds</a>
+  <a href="#faq">FAQ</a>
+  <a href="tel:9413121199" class="nav-cta">Free Quote</a>
+</div>
+
+<script>
+  (function(){
+    var burger = document.getElementById('navBurger');
+    var panel = document.getElementById('navMobilePanel');
+    function closeMenu(){
+      burger.classList.remove('open');
+      panel.classList.remove('open');
+      burger.setAttribute('aria-expanded','false');
+    }
+    burger.addEventListener('click', function(){
+      var isOpen = panel.classList.toggle('open');
+      burger.classList.toggle('open', isOpen);
+      burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    panel.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', closeMenu);
+    });
+  })();
+</script>
 
 <!-- HERO -->
 <section class="pool-section hero">
